@@ -1,13 +1,22 @@
-import Home from "./pages/Home/Home";
-import { Typography } from "@mui/material";
+import React from 'react'
+import Home from './pages/Home/Home'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+
+
+const theme = createTheme({
+palette: { mode: 'light' }
+})
+
 
 function App() {
-  return (
-    <div>
-      <Typography variant="h4">Data Table</Typography>
-      <Home />
-    </div>
-  );
+return (
+<ThemeProvider theme={theme}>
+<CssBaseline />
+<Home />
+</ThemeProvider>
+)
 }
 
-export default App;
+
+export default App
