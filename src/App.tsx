@@ -1,22 +1,18 @@
-import React from 'react'
-import Home from './pages/Home/Home'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-
+import Home from './pages/Home';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const theme = createTheme({
-palette: { mode: 'light' }
-})
-
+  palette: { mode: 'light' }
+});
 
 function App() {
-return (
-<ThemeProvider theme={theme}>
-<CssBaseline />
-<Home />
-</ThemeProvider>
-)
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Home />
+    </ThemeProvider>
+  );
 }
 
-
-export default App
+export default App;
