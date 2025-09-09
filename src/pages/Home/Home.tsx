@@ -4,8 +4,9 @@ import { GridPaginationModel } from '@mui/x-data-grid';
 import DataTable from '../../components/DataTable/DataTable';
 import { Container, Typography } from '@mui/material';
 import data from "../../data/data.json";
-import { PersonRow } from "../../types";
+import { RawPersonData,PersonRow } from "../../types";
 import { columns } from './columns';
+
 
 const Home = () => {
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
@@ -13,7 +14,7 @@ const Home = () => {
     page: 0,
   });
 
-  const rows: PersonRow[] = (data as any[]).map((row, index) => ({
+  const rows: PersonRow[] = (data as RawPersonData[]).map((row, index) => ({
     id: index + 1,
     name: row["Name"],
     position: row["Position"],
