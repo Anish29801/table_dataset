@@ -1,20 +1,14 @@
 import "@fontsource/poppins";
-import { useState } from 'react';
-import { GridPaginationModel } from '@mui/x-data-grid';
 import DataTable from '../../components/DataTable/DataTable';
 import { Container, Typography } from '@mui/material';
 import data from "../../data/data.json";
 import { RawPersonData,PersonRow } from "../../types";
-import { columns } from './columns';
 
+import { columns } from './columns';  
 
 const Home = () => {
-  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    pageSize: 10,
-    page: 0,
-  });
-
   const rows: PersonRow[] = (data as RawPersonData[]).map((row, index) => ({
+
     id: index + 1,
     name: row["Name"],
     position: row["Position"],
@@ -24,7 +18,7 @@ const Home = () => {
   }));
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ mt: 5 }}>
       <Typography
         variant="h4"
         component="h1"
@@ -34,13 +28,7 @@ const Home = () => {
       >
         DealAmaze Project 1 - Data Table
       </Typography>
-
-      <DataTable
-        rows={rows}
-        columns={columns}
-        paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
-      />
+      <DataTable rows={rows} columns={columns} />
     </Container>
   );
 };
