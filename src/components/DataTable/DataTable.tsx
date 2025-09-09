@@ -1,14 +1,21 @@
 import React, { useState, useMemo } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import { Box, TextField } from "@mui/material";
 import { PersonRow } from "../../types";
 
 interface DataTableProps {
   rows: PersonRow[];
-  columns: GridColDef[]; 
+  columns: GridColDef[];
+  paginationModel: GridPaginationModel;
+  onPaginationModelChange: (model: GridPaginationModel) => void;
 }
 
-const DataTable: React.FC<DataTableProps> = ({ rows, columns }) => {
+const DataTable: React.FC<DataTableProps> = ({
+  rows,
+  columns,
+  paginationModel,
+  onPaginationModelChange,
+}) => {
   const [searchText, setSearchText] = useState("");
 
   const filteredRows = useMemo(() => {
@@ -36,9 +43,8 @@ const DataTable: React.FC<DataTableProps> = ({ rows, columns }) => {
       <DataGrid
         rows={filteredRows}
         columns={columns}
-        initialState={{
-          pagination: { paginationModel: { pageSize: 10, page: 0 } },
-        }}
+        paginationModel={paginationModel}
+        onPaginationModelChange={onPaginationModelChange}
         pageSizeOptions={[5, 10, 20]}
         checkboxSelection
         disableRowSelectionOnClick
