@@ -7,6 +7,17 @@ export type PersonRow = {
   startDate: string;
 };
 
+export interface RandomUser {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  office: string;
+  age: number;
+  startDate: string;
+}
+
+
 export interface RawPersonData {
   id: number;
   Name: string;
@@ -23,3 +34,12 @@ export interface UserFormData {
   dob: string;
   branch: string;
 }
+export interface RandomUserApiResponse {
+  name: { first: string; last: string };
+  email: string;
+  phone: string;
+  location: { city: string };
+  dob: { age: number };
+  registered: { date: string };
+}
+
