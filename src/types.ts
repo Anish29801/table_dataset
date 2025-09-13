@@ -15,3 +15,11 @@ export interface RawPersonData {
   Age: number;
   "Start date": string;
 }
+
+export interface UserFormData {
+  name: string;
+  age: number;
+  gender: string;
+  dob: string;
+  branch: string;
+}
