@@ -1,49 +1,40 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@mui/material';
-import { UserFormData } from '../../types';
+import { GridColDef } from "@mui/x-data-grid";
+import DataTable from "../../components/DataTable/DataTable";
+import { UserFormData, PersonRow } from "../../types";
 
 interface UserTableProps {
   users: UserFormData[];
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
 }
 
-export function UserTable({ users, searchTerm, setSearchTerm }: UserTableProps) {
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+const userColumns: GridColDef[] = [
+  { field: "name", headerName: "Name", flex: 1 },
+  { field: "age", headerName: "Age", flex: 1 },
+  { field: "gender", headerName: "Gender", flex: 1 },
+  { field: "dob", headerName: "DOB", flex: 1 },
+  { field: "branch", headerName: "Branch", flex: 1 },
+  { field: "position", headerName: "Position", flex: 1 },
+  { field: "office", headerName: "Office", flex: 1 },
+  { field: "startDate", headerName: "Start Date", flex: 1 },
+];
+
+export function UserTable({ users }: UserTableProps) {
+  const rows: PersonRow[] = users.map((user, index) => ({
+    id: index + 1,
+    name: user.name,
+    age: user.age,
+    gender: user.gender,
+    dob: user.dob,
+    branch: user.branch,
+    position: "-",  
+    office: "-",      
+    startDate: "-",     
+  }));
 
   return (
-    <>
-      <TextField
-        label="Search by Name"
-        fullWidth
-        margin="normal"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-
-      <Table sx={{ mt: 3 }}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Age</TableCell>
-            <TableCell>Gender</TableCell>
-            <TableCell>DOB</TableCell>
-            <TableCell>Branch</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {filteredUsers.map((user, index) => (
-            <TableRow key={index}>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.age}</TableCell>
-              <TableCell>{user.gender}</TableCell>
-              <TableCell>{user.dob}</TableCell>
-              <TableCell>{user.branch}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </>
+    <DataTable
+      rows={rows}
+      columns={userColumns}
+      searchPlaceholder="Search by any user field"
+    />
   );
 }

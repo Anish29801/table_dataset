@@ -5,18 +5,24 @@ import { PersonRow } from "../../types";
 
 interface DataTableProps {
   rows: PersonRow[];
-  columns: GridColDef[]; 
+  columns: GridColDef[];
+  searchPlaceholder?: string;
 }
 
-const DataTable: React.FC<DataTableProps> = ({ rows, columns }) => {
+const DataTable: React.FC<DataTableProps> = ({
+  rows,
+  columns,
+  searchPlaceholder = "Type to search",
+}) => {
   const [searchText, setSearchText] = useState("");
 
   const filteredRows = useMemo(() => {
     if (!searchText) return rows;
     return rows.filter((row) =>
-      Object.values(row).some((value) =>
-        String(value).toLowerCase().includes(searchText.toLowerCase())
-      )
+      Object.values(row)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchText.toLowerCase())
     );
   }, [rows, searchText]);
 
@@ -24,7 +30,7 @@ const DataTable: React.FC<DataTableProps> = ({ rows, columns }) => {
     <Box sx={{ height: 600, width: "100%", mt: 4 }}>
       <TextField
         label="Search"
-        placeholder="Type to search"
+        placeholder={searchPlaceholder}
         variant="outlined"
         size="small"
         fullWidth
