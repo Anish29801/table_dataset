@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import DataTable from "./DataTableAPI/DataTable";
-import WeatherCard from "./WeatherCard";
+import WeatherCard from "../../pages/WeatherCard";
 import { GridPaginationModel } from "@mui/x-data-grid";
 import { RandomUser, RandomUserApiResponse } from "../../types";
 import { columns } from "./columns";

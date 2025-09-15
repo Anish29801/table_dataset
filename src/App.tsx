@@ -2,10 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import Navbar from './routes/Navbar';
+import Navbar from './pages/Navbar';
 import Home from './pages/Home';
 import APIComponent from './routes/APIComponent';
-import ZodForm from './routes/ZodForm';
+import ZodForm from './pages/ZodForm';
 
 const theme = createTheme({
   palette: { mode: 'light' },
