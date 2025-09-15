@@ -1,5 +1,5 @@
 import "@fontsource/poppins";
-import DataTable from '../../routes/DataTable/DataTable';
+import DataTable from '../../components/DataTable/DataTable';
 import { Container, Typography } from '@mui/material';
 import data from "../../data/data.json";
 import { RawPersonData,PersonRow } from "../../types";
