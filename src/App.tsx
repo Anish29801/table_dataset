@@ -22,17 +22,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/api"
-            element={
-              <WeatherCard
-                onSuccess={(data) => {
-                  console.log("Weather data added:", data);
-                }}
-              />
-            }
-          />
-
+          <Route path="/api" element={<WeatherCard />} />
           <Route path="/form" element={<ZodForm />} />
         </Routes>
       </Router>

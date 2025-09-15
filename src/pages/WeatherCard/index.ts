@@ -1,4 +1,4 @@
-import WeatherCard from '../../components/WeatherComponent/WeatherComponent';
+import WeatherCard from './WeatherCard';
 
 
 export default WeatherCard;
