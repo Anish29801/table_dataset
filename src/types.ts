@@ -34,12 +34,13 @@ export interface UserFormData {
   dob: string;
   branch: string;
 }
-export interface RandomUserApiResponse {
-  name: { first: string; last: string };
-  email: string;
-  phone: string;
-  location: { city: string };
-  dob: { age: number };
-  registered: { date: string };
+
+export interface SimpleUserRow {
+  id: number;
+  name: string;
+  age: number;
+  gender: string;
+  dob: string;
+  branch: string;
 }
 
