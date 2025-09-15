@@ -43,4 +43,17 @@ export interface SimpleUserRow {
   dob: string;
   branch: string;
 }
-
+export interface WeatherData {
+  name: string;
+  main: {
+    temp: number;
+    feels_like: number;
+    humidity: number;
+  };
+  weather: {
+    description: string;
+  }[];
+  wind: {
+    speed: number;
+  };
+}

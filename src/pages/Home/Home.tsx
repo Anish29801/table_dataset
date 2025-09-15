@@ -2,13 +2,11 @@ import "@fontsource/poppins";
 import DataTable from '../../components/DataTable/DataTable';
 import { Container, Typography } from '@mui/material';
 import data from "../../data/data.json";
-import { RawPersonData,PersonRow } from "../../types";
-
+import { RawPersonData, PersonRow } from "../../types";
 import { columns } from './columns';  
 
 const Home = () => {
   const rows: PersonRow[] = (data as RawPersonData[]).map((row, index) => ({
-
     id: index + 1,
     name: row["Name"],
     position: row["Position"],
@@ -28,7 +26,8 @@ const Home = () => {
       >
         DealAmaze Project 1 - Data Table
       </Typography>
-      <DataTable rows={rows} columns={columns} />
+
+      <DataTable rows={rows} columns={columns} searchPlaceholder="Search by any field" />
     </Container>
   );
 };

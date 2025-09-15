@@ -1,91 +1,62 @@
 import React, { useState } from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  CircularProgress,
-  TextField,
-  Box,
-} from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import WeatherComponent from "../../components/WeatherComponent/WeatherComponent";
+import DataTable from "../../components/DataTable/DataTable";
+import { GridColDef } from "@mui/x-data-grid";
+import { WeatherData } from "../../types";
 
-const API_KEY = "d4153b342010ef4174468b6454bc0e26";
+interface WeatherRow {
+  id: number;
+  city: string;
+  temp: number;
+  feels_like: number;
+  description: string;
+  wind: number;
+  humidity: number;
+}
 
-const fetchWeather = async (location: string) => {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${API_KEY}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Failed to fetch weather");
-  return res.json();
-};
+interface WeatherCardProps {
+  onSuccess?: (data: WeatherRow) => void;
+}
 
-const WeatherCard: React.FC = () => {
-  const [location, setLocation] = useState("Hyderabad");
+const WeatherCard: React.FC<WeatherCardProps> = ({ onSuccess }) => {
+  const [rows, setRows] = useState<WeatherRow[]>([]);
 
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["weather", location],
-    queryFn: () => fetchWeather(location),
-    enabled: !!location, // don’t fetch if location is empty
-    refetchOnWindowFocus: false,
-  });
+  const columns: GridColDef[] = [
+    { field: "city", headerName: "City", flex: 1 },
+    { field: "temp", headerName: "Temperature (°C)", flex: 1 },
+    { field: "feels_like", headerName: "Feels Like (°C)", flex: 1 },
+    { field: "description", headerName: "Description", flex: 1 },
+    { field: "wind", headerName: "Wind (m/s)", flex: 1 },
+    { field: "humidity", headerName: "Humidity (%)", flex: 1 },
+  ];
+
+  const handleWeatherSuccess = (data: WeatherData) => {
+    const newRow: WeatherRow = {
+      id: rows.length + 1,
+      city: data.name,
+      temp: data.main.temp,
+      feels_like: data.main.feels_like,
+      description: data.weather[0].description,
+      wind: data.wind.speed,
+      humidity: data.main.humidity,
+    };
+
+    setRows((prev) => [...prev, newRow]);
+
+    if (onSuccess) {
+      onSuccess(newRow);
+    }
+  };
 
   return (
-    <Card
-      sx={{
-        maxWidth: 400,
-        mx: "auto",
-        my: 4,
-        textAlign: "center",
-        boxShadow: 4,
-        borderRadius: 3,
-        p: 2,
-      }}
-    >
-      <CardContent>
-        <Typography variant="h5" fontWeight="bold" gutterBottom>
-          Weather App
-        </Typography>
-
-        <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            size="small"
-            label="Enter City"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-          <Button
-            variant="contained"
-            onClick={() => refetch()}
-            sx={{ borderRadius: 2 }}
-          >
-            Search
-          </Button>
-        </Box>
-
-        {isLoading ? (
-          <CircularProgress sx={{ my: 3 }} />
-        ) : isError ? (
-          <Typography color="error">❌ Failed to load weather</Typography>
-        ) : data ? (
-          <>
-            <Typography variant="h6">{data.name}</Typography>
-            <Typography variant="body1">
-              🌡 {data.main.temp}°C (Feels like {data.main.feels_like}°C)
-            </Typography>
-            <Typography variant="body1">
-              🌤 {data.weather[0].description}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              💨 Wind: {data.wind.speed} m/s | 💧 Humidity: {data.main.humidity}%
-            </Typography>
-          </>
-        ) : (
-          <Typography>Enter a city to see the weather</Typography>
-        )}
-      </CardContent>
-    </Card>
+    <>
+      <WeatherComponent onSuccess={handleWeatherSuccess} />
+      <DataTable
+        rows={rows}
+        columns={columns}
+        searchPlaceholder="Search city"
+      />
+    </>
   );
 };
 
