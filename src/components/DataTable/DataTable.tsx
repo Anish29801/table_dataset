@@ -42,12 +42,9 @@ function DataTable<T extends { id: number }>(props: DataTableProps<T>) {
     setSelectedRow(null);
   };
 
-  // Helper function to convert key to Sentence Case
   const toSentenceCase = (str: string) => {
     const result = str
-      // Add space before capital letters
       .replace(/([A-Z])/g, " $1")
-      // Replace underscores with spaces
       .replace(/_/g, " ")
       .trim();
     return result.charAt(0).toUpperCase() + result.slice(1);
@@ -82,11 +79,13 @@ function DataTable<T extends { id: number }>(props: DataTableProps<T>) {
         <DialogTitle>Row Details</DialogTitle>
         <DialogContent dividers>
           {selectedRow &&
-            Object.entries(selectedRow).map(([key, value]) => (
-              <Typography key={key} sx={{ mb: 1 }}>
-                <strong>{toSentenceCase(key)}:</strong> {String(value)}
-              </Typography>
-            ))}
+            Object.entries(selectedRow)
+              .filter(([key]) => !key.toLowerCase().includes("id")) // hide any 'id' fields
+              .map(([key, value]) => (
+                <Typography key={key} sx={{ mb: 1 }}>
+                  <strong>{toSentenceCase(key)}:</strong> {String(value)}
+                </Typography>
+              ))}
         </DialogContent>
         <DialogActions>
           <Button
@@ -101,7 +100,6 @@ function DataTable<T extends { id: number }>(props: DataTableProps<T>) {
           >
             Close
           </Button>
-
         </DialogActions>
       </Dialog>
     </Box>
