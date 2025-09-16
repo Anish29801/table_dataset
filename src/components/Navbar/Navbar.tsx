@@ -12,6 +12,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 const Navbar: React.FC = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,27 +26,21 @@ const Navbar: React.FC = () => {
       <List>
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/">
-            <ListItemText
-              primary="DataTable"
-              primaryTypographyProps={{ sx: { color: "#1976d2" } }}
-            />
+            <ListItemText primary="DataTable" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/api">
-            <ListItemText
-              primary="API"
-              primaryTypographyProps={{ sx: { color: "#1976d2" } }}
-            />
+            <ListItemText primary="API" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/form">
-            <ListItemText
-              primary="Zod & Form"
-              primaryTypographyProps={{ sx: { color: "#1976d2" } }}
-            />
+            <ListItemText primary="Zod & Form" />
           </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ThemeToggle />
         </ListItem>
       </List>
     </Box>
@@ -53,12 +48,8 @@ const Navbar: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{ backgroundColor: "#ffffff", boxShadow: "1.5rem" }}
-      >
+      <AppBar position="static">
         <Toolbar>
-          {/* Left side title */}
           <Typography
             variant="h2"
             component="div"
@@ -66,38 +57,23 @@ const Navbar: React.FC = () => {
               flexGrow: 1,
               fontSize: "1.5rem",
               fontWeight: 600,
-              color: "#1976d2",
             }}
           >
             DealAmaze Internship
           </Typography>
 
           {/* Desktop menu */}
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Button
-              color="inherit"
-              component={Link}
-              to="/"
-              sx={{ color: "#1976d2" }}
-            >
+          <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 2 }}>
+            <Button color="inherit" component={Link} to="/">
               DataTable
             </Button>
-            <Button
-              color="inherit"
-              component={Link}
-              to="/api"
-              sx={{ color: "#1976d2" }}
-            >
+            <Button color="inherit" component={Link} to="/api">
               API
             </Button>
-            <Button
-              color="inherit"
-              component={Link}
-              to="/form"
-              sx={{ color: "#1976d2" }}
-            >
+            <Button color="inherit" component={Link} to="/form">
               Zod & Form
             </Button>
+            <ThemeToggle /> 
           </Box>
 
           {/* Mobile hamburger */}
@@ -105,7 +81,7 @@ const Navbar: React.FC = () => {
             color="inherit"
             edge="end"
             onClick={handleDrawerToggle}
-            sx={{ display: { xs: "block", sm: "none" }, color: "#1976d2" }}
+            sx={{ display: { xs: "block", sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>

@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  useTheme,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { GridColDef } from "@mui/x-data-grid";
@@ -25,6 +26,7 @@ const fetchWeather = async (location: string): Promise<WeatherData> => {
 };
 
 const WeatherCard: React.FC = () => {
+  const theme = useTheme();
   const [location, setLocation] = useState("");
   const [rows, setRows] = useState<WeatherRow[]>([]);
   const [isDuplicateDialogOpen, setIsDuplicateDialogOpen] = useState(false);
@@ -69,7 +71,7 @@ const WeatherCard: React.FC = () => {
 
       setLocation("");
     }
-  }, [data, isError]);
+  }, [data, isError, rows]);
 
   const handleCloseDuplicateDialog = () => {
     setIsDuplicateDialogOpen(false);
@@ -85,7 +87,8 @@ const WeatherCard: React.FC = () => {
       sx={{
         minHeight: "100vh",
         padding: 4,
-        backgroundColor: "#f5f5f5",
+        backgroundColor: theme.palette.background.default,
+        color: theme.palette.text.primary,
       }}
     >
       <Typography
@@ -125,14 +128,8 @@ const WeatherCard: React.FC = () => {
           sx={{
             minWidth: 120,
             height: 56,
-            bgcolor: "#1976d2",
-            color: "#fff",
             fontWeight: "bold",
             borderRadius: 2,
-            "&:hover": {
-              bgcolor: "#155a9c",
-              transform: "translateY(-2px)",
-            },
           }}
         >
           Go
@@ -152,7 +149,7 @@ const WeatherCard: React.FC = () => {
       ) : isError ? (
         <Typography
           sx={{
-            color: "red",
+            color: theme.palette.error.main,
             textAlign: "center",
             fontWeight: "bold",
           }}
@@ -171,7 +168,11 @@ const WeatherCard: React.FC = () => {
           This city is already added in the Data Table.
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="error" onClick={handleCloseDuplicateDialog}>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleCloseDuplicateDialog}
+          >
             Close
           </Button>
         </DialogActions>

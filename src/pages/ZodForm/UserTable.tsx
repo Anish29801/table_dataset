@@ -1,5 +1,5 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import DataTable from "../../components/DataTable/DataTable";
 import { UserFormData, SimpleUserRow } from "../../types";
 
@@ -16,6 +16,8 @@ const userColumns: GridColDef[] = [
 ];
 
 export function UserTable({ users }: UserTableProps) {
+  const theme = useTheme();
+
   const rows: SimpleUserRow[] = users.map((user, index) => ({
     id: index + 1,
     name: user.name,
@@ -30,7 +32,7 @@ export function UserTable({ users }: UserTableProps) {
       sx={{
         minHeight: "100vh",
         padding: 4,
-        backgroundColor: "#f5f5f5",
+        backgroundColor: theme.palette.background.default,
         fontFamily: "'Poppins', sans-serif",
       }}
     >

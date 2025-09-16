@@ -5,6 +5,7 @@ import {
   TextField,
   MenuItem,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,9 +14,7 @@ import { UserFormData } from "../../types";
 
 export const UserSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  age: z
-    .number()
-    .min(1, "Age must be greater than 0"),
+  age: z.number().min(1, "Age must be greater than 0"),
   gender: z
     .string()
     .min(1, "Gender is required")
@@ -31,6 +30,7 @@ interface UserFormProps {
 }
 
 export function UserForm({ setUsers }: UserFormProps) {
+  const theme = useTheme();
   const {
     register,
     handleSubmit,
@@ -54,7 +54,7 @@ export function UserForm({ setUsers }: UserFormProps) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: theme.palette.background.default,
         padding: 4,
         fontFamily: "'Poppins', sans-serif",
       }}
@@ -69,7 +69,7 @@ export function UserForm({ setUsers }: UserFormProps) {
         sx={{
           width: "100%",
           maxWidth: 500,
-          bgcolor: "#fff",
+          bgcolor: theme.palette.background.paper,
           p: 4,
           borderRadius: 2,
           boxShadow: 3,
@@ -139,14 +139,8 @@ export function UserForm({ setUsers }: UserFormProps) {
             mt: 2,
             py: 1.5,
             minWidth: 120,
-            bgcolor: "#1976d2",
-            color: "#fff",
             fontWeight: "bold",
             borderRadius: 2,
-            "&:hover": {
-              bgcolor: "#155a9c",
-              transform: "translateY(-2px)",
-            },
           }}
         >
           Submit

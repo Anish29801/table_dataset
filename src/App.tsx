@@ -1,23 +1,16 @@
+// src/App.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import ZodForm from "./pages/ZodForm";
 import WeatherCard from "./pages/WeatherCard";
-
-const theme = createTheme({
-  palette: {
-    mode: "light",
-  },
-});
+import { CustomThemeProvider } from "../src/components/theme/ThemeContext";
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <CustomThemeProvider>
       <Router>
         <Navbar />
         <Routes>
@@ -26,7 +19,7 @@ const App = () => {
           <Route path="/form" element={<ZodForm />} />
         </Routes>
       </Router>
-    </ThemeProvider>
+    </CustomThemeProvider>
   );
 };
 
