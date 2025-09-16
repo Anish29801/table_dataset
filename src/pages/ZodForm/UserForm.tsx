@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -31,6 +31,8 @@ interface UserFormProps {
 
 export function UserForm({ setUsers }: UserFormProps) {
   const theme = useTheme();
+  const [status, setStatus] = useState<"success" | "error" | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -47,6 +49,17 @@ export function UserForm({ setUsers }: UserFormProps) {
     },
   });
 
+  const onSubmit = (data: UserFormData) => {
+    try {
+      const age = Number(data.age);
+      setUsers((prev) => [...prev, { ...data, age }]);
+      reset();
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -61,11 +74,7 @@ export function UserForm({ setUsers }: UserFormProps) {
     >
       <Box
         component="form"
-        onSubmit={handleSubmit((data) => {
-          const age = Number(data.age);
-          setUsers((prev) => [...prev, { ...data, age }]);
-          reset();
-        })}
+        onSubmit={handleSubmit(onSubmit, () => setStatus("error"))}
         sx={{
           width: "100%",
           maxWidth: 500,
@@ -145,6 +154,17 @@ export function UserForm({ setUsers }: UserFormProps) {
         >
           Submit
         </Button>
+
+        {status === "success" && (
+          <Typography sx={{ color: "green", textAlign: "center", mt: 2 }}>
+             Form submitted successfully!
+          </Typography>
+        )}
+        {status === "error" && (
+          <Typography sx={{ color: "red", textAlign: "center", mt: 2 }}>
+            Submission failed. Please check the form.
+          </Typography>
+        )}
       </Box>
     </Box>
   );
