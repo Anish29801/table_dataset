@@ -73,6 +73,22 @@ function DataTable<T extends { id: number }>(props: DataTableProps<T>) {
         checkboxSelection
         disableRowSelectionOnClick
         onRowClick={handleRowClick}
+        sx={{
+          "& .MuiDataGrid-virtualScroller": {
+            scrollbarWidth: "none", // Firefox
+            msOverflowStyle: "none", // IE/Edge
+          },
+          "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {
+            display: "none", // Chrome, Safari, Opera
+          },
+          "& .MuiDataGrid-main": {
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          },
+          "& .MuiDataGrid-main::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
       />
 
       <Dialog open={isDialogOpen} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
@@ -80,7 +96,7 @@ function DataTable<T extends { id: number }>(props: DataTableProps<T>) {
         <DialogContent dividers>
           {selectedRow &&
             Object.entries(selectedRow)
-              .filter(([key]) => !key.toLowerCase().includes("id")) // hide any 'id' fields
+              .filter(([key]) => !key.toLowerCase().includes("id")) // hide 'id' fields
               .map(([key, value]) => (
                 <Typography key={key} sx={{ mb: 1 }}>
                   <strong>{toSentenceCase(key)}:</strong> {String(value)}
