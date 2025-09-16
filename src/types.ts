@@ -57,3 +57,13 @@ export interface WeatherData {
     speed: number;
   };
 }
+
+export interface WeatherRow {
+  id: number;
+  city: string;
+  temp: number;
+  feels_like: number;
+  description: string;
+  wind: number;
+  humidity: number;
+}

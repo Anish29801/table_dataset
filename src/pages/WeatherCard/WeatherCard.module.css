@@ -1,0 +1,77 @@
+.weather-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.weather-card {
+  width: 100%;
+  max-width: 800px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all children horizontally */
+}
+
+.weather-title {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #1976d2;
+  margin-bottom: 32px;
+  text-align: center;
+  width: 100%; /* Ensure it stretches across the card */
+}
+
+
+.input-section {
+  display: flex;
+  align-items: center; /* Ensures vertical alignment */
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.input-section .MuiTextField-root {
+  flex: 1;
+  min-width: 250px; /* Ensures enough width */
+}
+
+.search-button {
+  min-width: 140px;
+  height: 56px; /* Matches TextField default height */
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-weight: 500;
+  text-align: center;
+  margin: 24px 0;
+}
+
+.table-container {
+  height: 450px;
+  margin-top: 32px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .input-section {
+    flex-direction: column;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+}

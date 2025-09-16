@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./WeatherCard.module.css"
 import {
   Card,
   CardContent,
@@ -22,15 +23,7 @@ const fetchWeather = async (location: string): Promise<WeatherData> => {
   return res.json();
 };
 
-interface WeatherRow {
-  id: number;
-  city: string;
-  temp: number;
-  feels_like: number;
-  description: string;
-  wind: number;
-  humidity: number;
-}
+import { WeatherRow } from "../../types";
 
 const WeatherCard: React.FC = () => {
   const [location, setLocation] = useState("Hyderabad");
@@ -69,13 +62,13 @@ const WeatherCard: React.FC = () => {
   }, [data, isError]);
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-      <Card sx={{ width: "90%", maxWidth: 800, p: 3, boxShadow: 6, borderRadius: 4 }}>
-        <Typography variant="h4" fontWeight="bold" textAlign="center" mb={3}>
+    <Box className="weather-container">
+      <Card className="weather-card">
+        <Typography variant="h4" className="weather-title">
           Weather App
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 2, mb: 3, flexWrap: "wrap" }}>
+        <Box className="input-section">
           <TextField
             fullWidth
             variant="outlined"
@@ -87,23 +80,35 @@ const WeatherCard: React.FC = () => {
           <Button
             variant="contained"
             onClick={() => refetch()}
-            sx={{ minWidth: "120px" }}
+            sx={{
+              minWidth: 140,
+              height: 56,
+              bgcolor: "#1976d2",
+              color: "#fff",
+              fontWeight: "bold",
+              borderRadius: 2,
+              "&:hover": {
+                bgcolor: "#155a9c",
+                transform: "translateY(-2px)",
+              },
+            }}
           >
             Search
           </Button>
+
         </Box>
 
         {isLoading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", my: 4 }}>
+          <Box className="loading-container">
             <CircularProgress />
           </Box>
         ) : isError ? (
-          <Typography color="error" textAlign="center">
+          <Typography className="error-message">
             ❌ Failed to load weather data.
           </Typography>
         ) : null}
 
-        <Box sx={{ height: 450, mt: 4 }}>
+        <Box className="table-container">
           <DataTable
             rows={rows}
             columns={columns}
@@ -112,6 +117,8 @@ const WeatherCard: React.FC = () => {
         </Box>
       </Card>
     </Box>
+
+
   );
 };
 
