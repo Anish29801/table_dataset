@@ -162,7 +162,7 @@ const WeatherCard: React.FC = () => {
       ) : null}
 
       <Box sx={{ marginTop: 4 }}>
-        <DataTable rows={rows} columns={columns} GoPlaceholder="Go city" />
+        <DataTable rows={rows} columns={columns} searchPlaceholder="Search city" />
       </Box>
 
       <Dialog open={isDuplicateDialogOpen} onClose={handleCloseDuplicateDialog}>

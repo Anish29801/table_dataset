@@ -61,9 +61,9 @@ export interface WeatherData {
 export interface WeatherRow {
   id: number;
   city: string;
-  temp: number;
-  feels_like: number;
+  temp: string;
+  feels_like: string;
   description: string;
-  wind: number;
-  humidity: number;
+  wind: string;
+  humidity: string;
 }
