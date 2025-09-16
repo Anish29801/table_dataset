@@ -1,20 +1,25 @@
-import React from 'react';
-import { Box, Button, TextField, MenuItem, Typography } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { UserFormData } from '../../types';
-import "./ZodForm.module.css"
+import React from "react";
+import {
+  Box,
+  Button,
+  TextField,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { UserFormData } from "../../types";
 
 export const UserSchema = z.object({
   name: z.string().min(1, "Name is required"),
   age: z
     .number()
-    .min(1, "Age must be greater than 0")
-    .refine(val => !isNaN(val), { message: "Age must be a number" }),
-  gender: z.string()
+    .min(1, "Age must be greater than 0"),
+  gender: z
+    .string()
     .min(1, "Gender is required")
-    .refine(val => ["Male", "Female", "Other"].includes(val), {
+    .refine((val) => ["Male", "Female", "Other"].includes(val), {
       message: "Gender must be Male, Female, or Other",
     }),
   dob: z.string().min(1, "Date of birth is required"),
@@ -26,11 +31,16 @@ interface UserFormProps {
 }
 
 export function UserForm({ setUsers }: UserFormProps) {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<UserFormData>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<UserFormData>({
     resolver: zodResolver(UserSchema),
     defaultValues: {
       name: "",
-      age: 0,
+      age: undefined,
       gender: "Male",
       dob: "",
       branch: "",
@@ -38,102 +48,110 @@ export function UserForm({ setUsers }: UserFormProps) {
   });
 
   return (
-    <div className="user-form-container">
-      <div className="user-form-card">
-        <Typography
-        variant="h4"
-        component="h1"
-        gutterBottom
-        align="center"
-        sx={{ fontFamily: "Poppins, sans-serif" }}
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f5f5f5",
+        padding: 4,
+        fontFamily: "'Poppins', sans-serif",
+      }}
+    >
+      <Box
+        component="form"
+        onSubmit={handleSubmit((data) => {
+          const age = Number(data.age);
+          setUsers((prev) => [...prev, { ...data, age }]);
+          reset();
+        })}
+        sx={{
+          width: "100%",
+          maxWidth: 500,
+          bgcolor: "#fff",
+          p: 4,
+          borderRadius: 2,
+          boxShadow: 3,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+        }}
       >
+        <Typography variant="h4" align="center" sx={{ fontWeight: 400 }}>
           User Input Form
-      </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit((data) => {
-            console.log("Form Data:", JSON.stringify(data, null, 2));
-            setUsers((prev) => [...prev, { ...data, age: Number(data.age) }]);
-            reset();
-          })}
+        </Typography>
+
+        <TextField
+          label="Name"
+          fullWidth
+          {...register("name")}
+          error={!!errors.name}
+          helperText={errors.name?.message}
+        />
+
+        <TextField
+          label="Age"
+          type="number"
+          fullWidth
+          {...register("age", { valueAsNumber: true })}
+          error={!!errors.age}
+          helperText={errors.age?.message}
+          InputProps={{ inputProps: { min: 1 } }}
+        />
+
+        <TextField
+          select
+          label="Gender"
+          fullWidth
+          defaultValue="Male"
+          {...register("gender")}
+          error={!!errors.gender}
+          helperText={errors.gender?.message}
         >
-          <TextField
-            label="Name"
-            fullWidth
-            className="user-form-field"
-            {...register("name")}
-            error={!!errors.name}
-            helperText={errors.name?.message}
-          />
+          <MenuItem value="Male">Male</MenuItem>
+          <MenuItem value="Female">Female</MenuItem>
+          <MenuItem value="Other">Other</MenuItem>
+        </TextField>
 
-          <TextField
-            label="Age"
-            type="number"
-            fullWidth
-            className="user-form-field"
-            {...register("age", { valueAsNumber: true })}
-            error={!!errors.age}
-            helperText={errors.age?.message}
-          />
+        <TextField
+          label="Date of Birth"
+          type="date"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          {...register("dob")}
+          error={!!errors.dob}
+          helperText={errors.dob?.message}
+        />
 
-          <TextField
-            select
-            label="Gender"
-            fullWidth
-            className="user-form-field"
-            defaultValue="Male"
-            {...register("gender")}
-            error={!!errors.gender}
-            helperText={errors.gender?.message}
-          >
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
-            <MenuItem value="Other">Other</MenuItem>
-          </TextField>
+        <TextField
+          label="Branch"
+          fullWidth
+          {...register("branch")}
+          error={!!errors.branch}
+          helperText={errors.branch?.message}
+        />
 
-          <TextField
-            label="Date of Birth"
-            type="date"
-            fullWidth
-            className="user-form-field"
-            InputLabelProps={{ shrink: true }}
-            {...register("dob")}
-            error={!!errors.dob}
-            helperText={errors.dob?.message}
-          />
-
-          <TextField
-            label="Branch"
-            fullWidth
-            className="user-form-field"
-            {...register("branch")}
-            error={!!errors.branch}
-            helperText={errors.branch?.message}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              mt: 4,
-              py: 1.5,
-              px: 4,
-              minWidth: 140,
-              bgcolor: "#1976d2",
-              color: "#fff",
-              fontWeight: "bold",
-              borderRadius: 2,
-              alignSelf: "center",
-              "&:hover": {
-                bgcolor: "#155a9c",
-                transform: "translateY(-2px)",
-              },
-            }}
-          >
-            Submit
-          </Button>
-
-        </Box>
-      </div>
-    </div>
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            mt: 2,
+            py: 1.5,
+            minWidth: 120,
+            bgcolor: "#1976d2",
+            color: "#fff",
+            fontWeight: "bold",
+            borderRadius: 2,
+            "&:hover": {
+              bgcolor: "#155a9c",
+              transform: "translateY(-2px)",
+            },
+          }}
+        >
+          Submit
+        </Button>
+      </Box>
+    </Box>
   );
 }

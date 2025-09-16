@@ -1,7 +1,7 @@
 import { GridColDef } from "@mui/x-data-grid";
+import { Box, Typography } from "@mui/material";
 import DataTable from "../../components/DataTable/DataTable";
 import { UserFormData, SimpleUserRow } from "../../types";
-import "./ZodForm.module.css"
 
 interface UserTableProps {
   users: UserFormData[];
@@ -26,17 +26,29 @@ export function UserTable({ users }: UserTableProps) {
   }));
 
   return (
-   <div className="user-table-container">
-      <div className="user-table-card">
-        <h2 className="user-table-title">User Data Table</h2>
-        <div className="table-container">
-          <DataTable
-            rows={rows}
-            columns={userColumns}
-            searchPlaceholder="Search by name, age, etc."
-          />
-        </div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        padding: 4,
+        backgroundColor: "#f5f5f5",
+        fontFamily: "'Poppins', sans-serif",
+      }}
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{ fontWeight: 400, marginBottom: 4 }}
+      >
+        User Data Table
+      </Typography>
+
+      <Box sx={{ width: "100%", maxWidth: 1200, margin: "0 auto" }}>
+        <DataTable
+          rows={rows}
+          columns={userColumns}
+          searchPlaceholder="Search by name, age, etc."
+        />
+      </Box>
+    </Box>
   );
 }

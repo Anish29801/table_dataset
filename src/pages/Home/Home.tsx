@@ -24,7 +24,7 @@ const Home = () => {
         align="center"
         sx={{ fontFamily: "Poppins, sans-serif" }}
       >
-        DealAmaze Project 1 - Data Table
+        Employee Data Table
       </Typography>
 
       <DataTable rows={rows} columns={columns} searchPlaceholder="Search by any field" />
