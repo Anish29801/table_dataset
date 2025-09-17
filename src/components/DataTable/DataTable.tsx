@@ -75,11 +75,12 @@ function DataTable<T extends { id: number }>(props: DataTableProps<T>) {
         onRowClick={handleRowClick}
         sx={{
           "& .MuiDataGrid-virtualScroller": {
-            scrollbarWidth: "none", // Firefox
-            msOverflowStyle: "none", // IE/Edge
+            overflow: "hidden !important",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
           },
           "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {
-            display: "none", // Chrome, Safari, Opera
+            display: "none",
           },
           "& .MuiDataGrid-main": {
             scrollbarWidth: "none",
